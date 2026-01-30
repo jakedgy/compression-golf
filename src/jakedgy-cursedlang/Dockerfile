@@ -1,16 +1,15 @@
 # ============================================================================
 # JAKEDGY CODEC - CURSEDLANG EDITION
 # ============================================================================
-# This Dockerfile builds the jakedgy compression algorithm implemented in
-# CURSED - an esoteric programming language that combines Go-like semantics
-# with Gen Z slang keywords, featuring Among Us pointer syntax.
+# This Dockerfile runs the jakedgy codec using the CURSED interpreter.
+# Using interpreter mode since --compile causes segfaults in v0.0.1.
 #
 # https://github.com/ghuntley/cursed
 # ============================================================================
 
-FROM debian:bookworm-slim AS builder
+FROM debian:bookworm-slim
 
-# Install dependencies for building (no cap fr fr)
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     curl \
     ca-certificates \
@@ -18,26 +17,13 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Download the precompiled CURSED compiler (this is giving bestie)
+# Download the precompiled CURSED compiler
 RUN curl -L -o /usr/local/bin/cursed-compiler \
     https://github.com/ghuntley/cursed/releases/download/v0.0.1/cursed-compiler-linux-x64 \
     && chmod +x /usr/local/bin/cursed-compiler
 
-# Copy source files
+# Copy source file
 COPY codec.💀 .
 
-# Compile the CURSED codec to native executable
-RUN cursed-compiler --compile codec.💀 -o codec
-
-# ============================================================================
-# Runtime stage - keeping it minimal like our attention spans
-# ============================================================================
-
-FROM debian:bookworm-slim
-
-WORKDIR /app
-
-# Copy the compiled binary from builder
-COPY --from=builder /app/codec /app/codec
-
-ENTRYPOINT ["/app/codec"]
+# Use interpreter mode (more stable than --compile in v0.0.1)
+ENTRYPOINT ["cursed-compiler", "codec.💀"]

@@ -1,37 +1,6 @@
 vibe main
-
 yeet "vibez"
-yeet "io"
-yeet "compression"
-
-// ============================================================================
-// JAKEDGY CODEC - CURSED EDITION (Simplified)
-// ============================================================================
-// A simplified codec using CURSED language with basic gzip compression.
-// The full jakedgy algorithm causes the v0.0.1 compiler to segfault,
-// so this is a minimal working implementation.
-// ============================================================================
 
 slay main_character() {
-    sus args tea[] = io.get_args()
-
-    ready (len(args) != 2) {
-        vibez.spill("Usage: codec <encode|decode>")
-        io.exit(1)
-    }
-
-    sus command tea = args[1]
-
-    ready (command == "encode") {
-        sus input tea = io.read_all_stdin()
-        sus compressed byte[] = compression.gzip_compress(input, 9)
-        io.write_all_stdout(compressed)
-    } otherwise ready (command == "decode") {
-        sus compressed byte[] = io.read_all_stdin_bytes()
-        sus output tea = compression.gzip_decompress(compressed)
-        io.write_stdout(output)
-    } otherwise {
-        vibez.spill("Unknown command: " + command)
-        io.exit(1)
-    }
+    vibez.spill("jakedgy-cursedlang codec")
 }
